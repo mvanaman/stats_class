@@ -51,13 +51,14 @@ conf_sim <- function(mu, sd, n_samples, sample_size = 10, confidence = 95, ...) 
     geom_hline(aes(yintercept = mu, linetype = "mu"), color = "purple") +
     labs(title = "95% Confidence Intervals") +
     ylab(label = NULL) +
-    xlab(label = paste("Samples (", expression(N), ")", sep = "")) +
+    xlab(label = paste("Sample Draw", sep = "")) +
     coord_flip(xlim = xlim, ylim = c(mu - (4 * sd), mu + (4 * sd)), clip = "off") +
     theme_tufte() +
     theme(
       plot.title = element_text(hjust = 0.5),
       legend.position = "right",
-      plot.margin = unit(c(0, 0, 1, 0.5), "cm")
+      plot.margin = unit(c(0, 0, 1, 0.5), "cm"),
+      text = element_text(size = 25)
     ) +
     # guides(color = guide_legend(title = "CI Captures \nPopulation Value?")) +
     scale_linetype_manual(
@@ -74,36 +75,40 @@ conf_sim <- function(mu, sd, n_samples, sample_size = 10, confidence = 95, ...) 
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
+      actionButton(
+        "draw",
+        label = "Draw New Samples"
+      ),
       numericInput( # 1st (and only) entry in this column
         "mu", # object name that gets referred to in server
-        label ="Enter A Population Mean (\\( \\mu \\))", # label displayed to user above text box
+        label ="Population Mean (\\( \\mu \\))", # label displayed to user above text box
         value = 100, # default is the mean of data$Y above
         step = 1 # increment for if user uses clicker thing to move values up and down
       ),
       numericInput(
         "sd", 
-        label = withMathJax("Enter a Population Standard Deviation (\\( \\sigma \\))"), 
+        label = withMathJax("Population Standard Deviation (\\( \\sigma \\)):"), 
         value = 10 
       ),
       numericInput(
         "n_samples", 
-        label = "Enter the Number of Samples You Want to Draw", 
+        label = "Number of Samples to Draw:", 
         value = 100
       ),
       numericInput(
         "confidence", 
-        label = "Enter Your Confidence Level", 
+        label = "Confidence Level:", 
         value = 95 
       ),
       numericInput(
         "sample_size", 
-        label = "Enter Your Size per Sample", 
+        label = "Size of Each Sample:", 
         value = 10
       ),
-      DT::dataTableOutput("data_tab")
+      DT::DTOutput("data_tab")
     ),
     mainPanel(
-      plotOutput("plot", height = "1000px")
+      plotOutput("plot", height = "950px")
     )
   )
 )
@@ -112,26 +117,29 @@ server <- function(input, output, session) {
   
   # create objects to use later
   # wrapping in the reactive({}) function lets you re-used object
-  n_samples <- reactive({input$n_samples})
-  sample_size <- reactive({input$sample_size})
-  mu <- reactive({input$mu})
-  sd <- reactive({input$sd})
-  confidence <- reactive({input$confidence})
+  # n_samples <- reactive({input$n_samples})
+  # sample_size <- reactive({input$sample_size})
+  # mu <- reactive({input$mu})
+  # sd <- reactive({input$sd})
+  # confidence <- reactive({input$confidence})
 
-  CIs <- reactive({
+  CIs <- eventReactive(input$draw, {
+    
     conf_sim(
-      n_samples = n_samples(),
-      sample_size = sample_size(), 
-      mu = mu(),
-      sd = sd(),
-      confidence = confidence()
-    )})
+      n_samples = input$n_samples,
+      sample_size = input$sample_size, 
+      mu = input$mu,
+      sd = input$sd,
+      confidence = input$confidence
+    )
+    
+  })
   
   output$plot <- renderPlot({
     CIs()$plot
   }, res = 96)
   
-  output$data_tab <- DT::renderDataTable({
+  output$data_tab <- DT::renderDT({
     DT::datatable(
       CIs()$samples,
       rownames = FALSE,
