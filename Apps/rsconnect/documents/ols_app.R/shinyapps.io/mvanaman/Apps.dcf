@@ -1,0 +1,14 @@
+name: Apps
+title: Apps
+username:
+account: mvanaman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8542028
+bundleId: 6946089
+url: https://mvanaman.shinyapps.io/Apps/
+when: 1678553627.8175
+lastSyncTime: 1678553627.81751
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Moments/.Rhistory|Moments/moments.R|Moments/my_raincloud.R|Rplots.pdf|sampling_CIs/.Rhistory|sampling_CIs/app.R|sampling_CIs/CI sim functin.R|sampling_CIs/sampling_CIs.Rmd|sampling_distribution/.DS_Store|sampling_distribution/.Rhistory|sampling_distribution/app.R|sampling_distribution/sampling_dist_code.R|www/.DS_Store

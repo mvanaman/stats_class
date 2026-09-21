@@ -1,0 +1,36 @@
+.js-irs-0 .irs-bar-edge, 
+.js-irs-0 .irs-bar,
+.js-irs-1 .irs-bar-edge, 
+.js-irs-1 .irs-bar {
+  background: #CCC591;
+  border: none;
+}
+.js-irs-0 .irs-single, 
+.js-irs-1 .irs-single {
+  background: none;
+  color: black;
+}
+.irs-line {
+  border: 1px solid black; 
+  height: 25px; 
+  border-radius: 0px;
+}
+.irs-grid-text {
+  bottom: 17px; 
+  z-index: 1;
+}
+.irs-grid-pol {
+  display: none;
+}
+.irs-max {
+  color: black;
+}
+.irs-min {
+  color: black;
+}
+.irs-slider {
+  width: 30px;
+  height: 30px; 
+  top: 22px;
+}
+    
