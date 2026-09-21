@@ -1,0 +1,124 @@
+---
+title: ""
+format: html
+self-contained: true
+---
+
+```{r}
+#| include: false
+source("HW_1_script.R")
+## just set the seed and render
+seed <- 2026
+
+## or futz with sample sizes, means, SDs if you want
+class_a <- generate_class_table(
+  seed = seed,
+  n = 16,
+  m = 70,
+  sd = 6.5
+)
+class_b <- generate_class_table(
+  seed = seed,
+  n = 16,
+  m = 78,
+  sd = 4.2
+)
+class_c <- generate_class_table(
+  seed = seed,
+  n = 16,
+  m = 82,
+  sd = 7.8
+)
+class_d <- generate_class_table(
+  seed = seed,
+  n = 16,
+  m = 73,
+  sd = 5.3
+)
+```
+
+### Homework 1
+
+```{css echo=FALSE}
+.column {
+text-align: center;
+}
+```
+
+::::: columns
+::: {.column width="50%"}
+### Class A
+
+`r class_a$blank_table`
+
+`r stats_blank`
+:::
+
+::: {.column width="50%"}
+### Class B
+
+`r class_b$blank_table`
+
+`r stats_blank`
+:::
+:::::
+
+::::: columns
+::: {.column width="50%"}
+### Class C
+
+`r class_c$blank_table`
+
+`r stats_blank`
+:::
+
+::: {.column width="50%"}
+### Class D
+
+`r class_d$blank_table`
+
+`r stats_blank`
+:::
+:::::
+
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
+::::::::: {.callout-note collapse="true"}
+## KEY
+
+::::: columns
+::: {.column width="50%"}
+### Class A
+
+`r class_a$key_table`
+
+`r class_a$key_stats`
+:::
+
+::: {.column width="50%"}
+### Class B
+
+`r class_b$key_table`
+
+`r class_b$key_stats`
+:::
+:::::
+
+::::: columns
+::: {.column width="50%"}
+### Class C
+
+`r class_c$key_table`
+
+`r class_c$key_stats`
+:::
+
+::: {.column width="50%"}
+### Class D
+
+`r class_d$key_table`
+
+`r class_d$key_stats`
+:::
+:::::
+:::::::::
