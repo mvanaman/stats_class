@@ -41,12 +41,7 @@ ui <- dashboardPage(
   dashboardHeader(),
   
   dashboardSidebar(
-    collapsed = TRUE,
-    
-    menuItem(
-      text = "Choose a sample size and draw samples",
-      icon = icon("circle-info")
-    )
+    disable = TRUE
   ),
   
   dashboardBody(
@@ -397,7 +392,7 @@ server <- function(input, output) {
       labs(
         x = "Sample Means",
         y = "Frequency",
-        title = "Sampling Distribution"
+        title = "Distribution of Sample Means (Sampling Distribution)"
       ) +
       
       scale_y_continuous(
@@ -452,7 +447,7 @@ server <- function(input, output) {
       
       HTML(
         paste0(
-          "<strong>Sample Size</strong>: ",
+          "<strong>Sample Size (n)</strong>: ",
           input$sample_size,
           "<br>",
           "<strong>Total Samples</strong>: ",
