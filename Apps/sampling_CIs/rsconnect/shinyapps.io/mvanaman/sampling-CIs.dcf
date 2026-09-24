@@ -1,0 +1,10 @@
+name: sampling-CIs
+title:
+username: mvanaman
+account: mvanaman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17980782
+bundleId: 12595708
+url: https://mvanaman.shinyapps.io/sampling-CIs/
+version: 1

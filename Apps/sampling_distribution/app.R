@@ -2,19 +2,15 @@
 # Load packages -----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-packages <- c(
-  "tidyverse",
-  "collapsibleTree",
-  "fontawesome",
-  "purrr",
-  "shiny",
-  "shinybrowser",
-  "shinycssloaders",
-  "shinydashboard",
-  "stringr"
-)
-
-lapply(packages, require, character.only = TRUE)
+library("tidyverse")
+library("collapsibleTree")
+library("fontawesome")
+library("purrr")
+library("shiny")
+library("shinybrowser")
+library("shinycssloaders")
+library("shinydashboard")
+library("stringr")
 
 
 # -------------------------------------------------------------------------
@@ -23,12 +19,14 @@ lapply(packages, require, character.only = TRUE)
 
 set.seed(100)
 
-vec <- rnorm(50000, 16, 5)
+raw <- -rlnorm(500000, meanlog = 0, sdlog = 1)
 
+vec <- 16 + 5 * (raw - mean(raw)) / 1.5
+
+vec <- vec[vec > 5]
 
 # Set theme
 ggplot2::theme_set(theme_classic())
-
 
 # -------------------------------------------------------------------------
 # UI ----------------------------------------------------------------------
@@ -82,6 +80,7 @@ ui <- dashboardPage(
         
         width = 4
       )
+     
     ),
     
     
@@ -290,7 +289,7 @@ server <- function(input, output) {
       population,
       aes(x = vec)
     ) +
-      geom_histogram() +
+      geom_histogram(binwidth = 0.25) +
       
       labs(
         x = "",
@@ -298,7 +297,7 @@ server <- function(input, output) {
       ) +
       
       scale_y_continuous(
-        limits = c(0, 4200),
+        # limits = c(0, 4200),
         expand = c(0, 0)
       ) +
       
@@ -387,7 +386,7 @@ server <- function(input, output) {
       aes(x = mean)
     ) +
       
-      geom_histogram(alpha = 0.5) +
+      geom_histogram(alpha = 0.5, binwidth = 0.5) +
             
       labs(
         x = "Sample Means",

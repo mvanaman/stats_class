@@ -9,6 +9,8 @@
 library(tidyverse)
 library(shiny)
 library(ggthemes)
+library(DT)
+library(here)
 
 options(scipen = 999)
 
@@ -51,8 +53,8 @@ conf_sim <- function(mu, sd, n_samples, sample_size = 10, confidence = 95, ...) 
     geom_hline(aes(yintercept = mu, linetype = "mu"), color = "purple") +
     labs(title = "95% Confidence Intervals") +
     ylab(label = NULL) +
-    xlab(label = paste("Sample Draw", sep = "")) +
-    coord_flip(xlim = xlim, ylim = c(mu - (4 * sd), mu + (4 * sd)), clip = "off") +
+    xlab(label = "Sample") +
+    coord_flip(xlim = xlim, ylim = c(25, 75), clip = "off") +
     theme_tufte() +
     theme(
       plot.title = element_text(hjust = 0.5),
@@ -75,19 +77,20 @@ conf_sim <- function(mu, sd, n_samples, sample_size = 10, confidence = 95, ...) 
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
+      
+      h3("Population Mean (\\( \\mu \\)) = 50"),
+      br(),
       actionButton(
         "draw",
         label = "Draw New Samples"
       ),
-      numericInput( # 1st (and only) entry in this column
-        "mu", # object name that gets referred to in server
-        label ="Population Mean (\\( \\mu \\))", # label displayed to user above text box
-        value = 100, # default is the mean of data$Y above
-        step = 1 # increment for if user uses clicker thing to move values up and down
-      ),
-      numericInput(
+      br(),
+      br(),
+      sliderInput(
         "sd", 
-        label = withMathJax("Population Standard Deviation (\\( \\sigma \\)):"), 
+        label = withMathJax("Population Standard Deviation (\\( \\sigma \\)):"),
+        min = 5, 
+        max = 15,
         value = 10 
       ),
       numericInput(
@@ -95,10 +98,10 @@ ui <- fluidPage(
         label = "Number of Samples to Draw:", 
         value = 100
       ),
-      numericInput(
+      selectInput(
         "confidence", 
-        label = "Confidence Level:", 
-        value = 95 
+        label = "Confidence Level:",
+        choices = c(90, 95, 99)
       ),
       numericInput(
         "sample_size", 
@@ -114,21 +117,13 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  
-  # create objects to use later
-  # wrapping in the reactive({}) function lets you re-used object
-  # n_samples <- reactive({input$n_samples})
-  # sample_size <- reactive({input$sample_size})
-  # mu <- reactive({input$mu})
-  # sd <- reactive({input$sd})
-  # confidence <- reactive({input$confidence})
 
   CIs <- eventReactive(input$draw, {
     
     conf_sim(
       n_samples = input$n_samples,
       sample_size = input$sample_size, 
-      mu = input$mu,
+      mu = 50,
       sd = input$sd,
       confidence = input$confidence
     )
@@ -151,8 +146,3 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = ui, server = server)
-
-# TO-DO
-## check boxes for confidence interval
-## add counts for Falls outside of interval. maybe annotate plot with percent that doesn't have mu
-## submit button
