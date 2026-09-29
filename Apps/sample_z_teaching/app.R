@@ -87,10 +87,10 @@ ui <- dashboardPage(
           label = "Draw Sample"
         ),
         
-        # br(),
-        # br(),
-        # 
-        # uiOutput("sample_info"),
+        br(),
+        br(),
+
+        uiOutput("sample_info"),
         
         width = 4
       )
@@ -345,58 +345,63 @@ server <- function(input, output) {
   }
   )
   
-  # output$sample_info <- renderUI({
-  #   
-  #   if (is.null(samp())) {
-  #     
-  #     withMathJax(
-  #       HTML(
-  #       paste0(
-  #         "<strong>Sample SD:</strong> --",
-  #         "<br>",
-  #         "<strong>Sample Mean:</strong> --",
-  #         "<br>",
-  #         "<strong>Deviation from Pop. Mean: </strong> --",
-  #         "<br>",
-  #         "<strong>Deviation in SE Units:</strong> --",
-  #         "<br>",
-  #         "<strong>95% CI [Lower, Upper]:</strong> --",
-  #         "<br>",
-  #         "<strong>CI Capture Population Mean?</strong> --"
-  #       )
-  #     )
-  #     )
-  #     
-  #   } else {
-  #     
-  #     stats <- sample_stats()
-  #     
-  #     HTML(
-  #       paste0(
-  #         "<strong>Sample SD:</strong> ",
-  #         sprintf("%.2f", stats$sd),
-  #         "<br>",
-  #         "<strong>Sample Mean:</strong> ",
-  #         sprintf("%.1f", stats$mean),
-  #         "<br>",
-  #         "<strong>Deviation from Pop. Mean: </strong> ",
-  #         sprintf("%.2f", stats$raw_diff),
-  #         "<br>",
-  #         "<strong>Deviation in SE Units:</strong> ",
-  #         sprintf("%.2f", stats$samp_z),
-  #         "<br>",
-  #         "<strong>95% CI [Lower, Upper]:</strong> [",
-  #         sprintf("%.2f", stats$lower),
-  #         ", ",
-  #         sprintf("%.2f", stats$upper),
-  #         "]",
-  #         "<br>",
-  #         "<strong>CI Capture Population Mean? </strong>",
-  #         stats$ci_capture_label
-  #       )
-  #     )
-  #   }
-  # })
+  output$sample_info <- renderUI({
+    
+    if (is.null(samp())) {
+      
+      withMathJax(
+        HTML(
+          paste0(
+            "<strong>\\(z_{\\text{crit}}\\):</strong> --"
+            #         "<strong>Sample SD:</strong> --",
+            #         "<br>",
+            #         "<strong>Sample Mean:</strong> --",
+            #         "<br>",
+            #         "<strong>Deviation from Pop. Mean: </strong> --",
+            #         "<br>",
+            #         "<strong>Deviation in SE Units:</strong> --",
+            #         "<br>",
+            #         "<strong>95% CI [Lower, Upper]:</strong> --",
+            #         "<br>",
+            #         "<strong>CI Capture Population Mean?</strong> --"
+          )
+        )
+      )
+      
+    } else {
+      
+      stats <- sample_stats()
+      
+      withMathJax(
+        HTML(
+          paste0(
+            "<strong>\\(z_{\\text{crit}}\\):</strong> ",
+            sprintf("%.2f", z())
+            #         "<strong>Sample SD:</strong> ",
+            #         sprintf("%.2f", stats$sd),
+            #         "<br>",
+            #         "<strong>Sample Mean:</strong> ",
+            #         sprintf("%.1f", stats$mean),
+            #         "<br>",
+            #         "<strong>Deviation from Pop. Mean: </strong> ",
+            #         sprintf("%.2f", stats$raw_diff),
+            #         "<br>",
+            #         "<strong>Deviation in SE Units:</strong> ",
+            #         sprintf("%.2f", stats$samp_z),
+            #         "<br>",
+            #         "<strong>95% CI [Lower, Upper]:</strong> [",
+            #         sprintf("%.2f", stats$lower),
+            #         ", ",
+            #         sprintf("%.2f", stats$upper),
+            #         "]",
+            #         "<br>",
+            #         "<strong>CI Capture Population Mean? </strong>",
+            #         stats$ci_capture_label
+          )
+        )
+      )
+    }
+  })
 }
 
 
