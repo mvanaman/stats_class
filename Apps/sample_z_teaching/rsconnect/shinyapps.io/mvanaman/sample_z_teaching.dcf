@@ -1,0 +1,10 @@
+name: sample_z_teaching
+title:
+username: mvanaman
+account: mvanaman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 18043129
+bundleId: 12623082
+url: https://mvanaman.shinyapps.io/sample_z_teaching/
+version: 1

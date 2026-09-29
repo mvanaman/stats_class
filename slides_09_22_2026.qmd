@@ -1,0 +1,32 @@
+---
+title: "slides_90_22_2026"
+format: revealjs
+editor: visual
+self-contained: false
+---
+
+```{r}
+#| include: false
+library(htmltools)
+# library(here)
+# source(here("Apps", "sampling_distribution", "app.R"))
+```
+
+## Quarto
+
+<iframe src="https://mvanaman.shinyapps.io/sampling-distribution/" width="100%" height="1000px" loading="lazy" style="border: 1px solid #ddd; border-radius: 8px; transform:scale(0.8);"></iframe>
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+- Content authored with markdown
+- Output from executable code
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
